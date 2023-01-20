@@ -31,54 +31,55 @@
 		},
 		{
 			"objects": {
-				"Line1": {
+				"markerStop": {
 					"type": "line",
-					"top": -10,
+					"top": 0,
 					"left": 365,
-					"height": 139,
+					"height": 69,
 					"visibility": "hidden",
 					"sizingX": "move",
 					"sizingY": "move",
-					"width": 0,
-					"startPoint": "topLeft"
+					"width": 1,
+					"startPoint": "topLeft",
+					"stroke": "#1e90ff",
+					"strokeDashArray": [
+						2,
+						2
+					]
 				},
-				"Line2": {
+				"markerNoStop": {
 					"type": "line",
-					"top": -10,
+					"top": 0,
 					"left": 385,
-					"height": 139,
+					"height": 69,
 					"visibility": "hidden",
 					"sizingX": "move",
 					"sizingY": "move",
-					"width": 0,
-					"startPoint": "topLeft"
+					"width": 1,
+					"startPoint": "topLeft",
+					"stroke": "#1e90ff",
+					"strokeDashArray": [
+						2,
+						2
+					]
 				},
-				"ThermoProgress": {
+				"progress": {
 					"type": "progress",
 					"top": 29,
 					"left": 60,
 					"width": 325,
 					"height": 15,
-					"sizingX": "grow",
-					"sizingY": "move",
-					"continuousExecution": false,
 					"min": 0,
 					"max": 100,
 					"graduationStep": 1,
-					"class": "Bouton",
-					"events": [
-						"onClick",
-						"onDataChange"
-					]
+					"events": []
 				},
-				"Message1": {
+				"title": {
 					"type": "input",
 					"top": 7,
 					"left": 60,
 					"width": 325,
-					"height": 18,
-					"sizingX": "grow",
-					"sizingY": "move",
+					"height": 16,
 					"class": "Progress_Title",
 					"focusable": false,
 					"fill": "transparent",
@@ -87,18 +88,16 @@
 					"contextMenu": "none",
 					"dragging": "none",
 					"dropping": "custom",
-					"events": [
-						"onDataChange"
-					]
+					"events": [],
+					"dataSource": "Form:C1466.title",
+					"fontTheme": "normal"
 				},
-				"Message2": {
+				"message": {
 					"type": "input",
 					"top": 46,
 					"left": 60,
 					"width": 325,
-					"height": 14,
-					"sizingX": "grow",
-					"sizingY": "move",
+					"height": 12,
 					"class": "Progress_Message",
 					"focusable": false,
 					"fill": "transparent",
@@ -107,9 +106,9 @@
 					"contextMenu": "none",
 					"dragging": "none",
 					"dropping": "custom",
-					"events": [
-						"onDataChange"
-					]
+					"events": [],
+					"dataSource": "Form:C1466.message",
+					"fontTheme": "normal"
 				},
 				"Icon": {
 					"type": "input",
@@ -117,20 +116,18 @@
 					"left": 10,
 					"width": 40,
 					"height": 40,
-					"sizingY": "move",
 					"dataSourceTypeHint": "picture",
 					"class": "Bouton",
 					"focusable": false,
 					"fill": "transparent",
 					"borderStyle": "none",
 					"enterable": false,
-					"contextMenu": "none",
 					"pictureFormat": "proportionalCenter",
 					"dragging": "none",
 					"dropping": "none",
-					"events": [
-						"onDataChange"
-					]
+					"events": [],
+					"contextMenu": "none",
+					"dataSource": "Form:C1466.icon"
 				},
 				"SepLine": {
 					"type": "line",
@@ -241,7 +238,7 @@
 						"onDataChange"
 					]
 				},
-				"StopButton": {
+				"stop": {
 					"type": "button",
 					"top": 28,
 					"left": 370,
@@ -250,13 +247,12 @@
 					"visibility": "hidden",
 					"sizingX": "move",
 					"sizingY": "move",
-					"dataSource": "vStopButton",
 					"class": "Bouton",
 					"focusable": false,
 					"icon": "/RESOURCES/Images/Close.png",
 					"iconFrames": 4,
 					"style": "custom",
-					"method": "ObjectMethods/StopButton.4dm",
+					"method": "ObjectMethods/stop.4dm",
 					"events": [
 						"onClick"
 					]
@@ -282,5 +278,14 @@
 	"$4d": {
 		"version": "1",
 		"kind": "form"
-	}
+	},
+	"method": "method.4dm",
+	"events": [
+		"onLoad",
+		"onTimer",
+		"onBoundVariableChange"
+	],
+	"geometryStamp": 41,
+	"windowSizingX": "fixed",
+	"windowSizingY": "fixed"
 }

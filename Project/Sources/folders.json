@@ -1,13 +1,84 @@
-﻿{
-	"Dossier par défaut": {
-		"groups": [
-			"Formulaires par défaut",
-			"Méthodes projet par défaut",
-			"Tables par défaut"
+{
+	"(Formulaires par défaut)": {},
+	"(Méthodes projet par défaut)": {},
+	"(Tables par défaut)": {},
+	"#Public": {
+		"methods": [
+			"Progress Get Button Enabled",
+			"Progress Get Button Title",
+			"Progress Get Icon",
+			"Progress Get Message",
+			"Progress Get On Error Method",
+			"Progress Get On Stop Method",
+			"Progress Get Progress",
+			"Progress Get Title",
+			"Progress New",
+			"Progress QUIT",
+			"Progress SET BUTTON ENABLED",
+			"Progress SET BUTTON TITLE",
+			"Progress SET FONT SIZES",
+			"Progress SET FONTS",
+			"Progress SET ICON",
+			"Progress SET MESSAGE",
+			"Progress SET ON ERROR METHOD",
+			"Progress SET ON STOP METHOD",
+			"Progress SET PROGRESS",
+			"Progress SET TITLE",
+			"Progress SET WINDOW VISIBLE",
+			"Progress Stopped"
 		]
 	},
-	"Formulaires par défaut": {},
-	"Méthodes projet par défaut": {},
-	"Tables par défaut": {},
-	"trash": {}
+	"#WIP": {
+		"methods": [
+			"Progress"
+		],
+		"forms": [
+			"MACOS",
+			"MAIN_MAC",
+			"MAIN_WIN",
+			"WINDOWS"
+		],
+		"classes": [
+			"progress"
+		]
+	},
+	"Component": {
+		"groups": [
+			"#Public",
+			"Private"
+		]
+	},
+	"Private": {
+		"methods": [
+			"Compiler_Arrays_Inter",
+			"Compiler_Methods",
+			"Compiler_Variables",
+			"Compiler_Variables_Inter",
+			"Progress__CallCallBack",
+			"Progress__Compiler",
+			"Progress__Launch",
+			"Progress__ManageMethodsError",
+			"Progress__ManageOnStop",
+			"Progress__OnExternalCall",
+			"Progress__Semaphore_OFF",
+			"Progress__Semaphore_ON",
+			"Progress__TrapError",
+			"Progress__UpdateDynVar",
+			"Progress__UpdateFonts",
+			"Progress__UpdateSizes"
+		],
+		"forms": [
+			"D_MultiProgress_Mac",
+			"D_MultiProgress_Win",
+			"D_Progress_Mac",
+			"D_Progress_Win"
+		]
+	},
+	"trash": {
+		"groups": [
+			"(Formulaires par défaut)",
+			"(Méthodes projet par défaut)",
+			"(Tables par défaut)"
+		]
+	}
 }

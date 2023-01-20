@@ -1,19 +1,21 @@
 {
 	"destination": "detailScreen",
-	"windowMinWidth": 400,
+	"shared": true,
+	"windowSizingY": "fixed",
 	"windowMaxWidth": 32000,
-	"windowMinHeight": 62,
-	"windowMaxHeight": 62,
 	"width": 400,
-	"height": 68,
-	"markerBody": 68,
-	"markerBreak": 68,
-	"markerFooter": 68,
+	"height": 120,
+	"markerBody": 120,
+	"markerBreak": 120,
+	"markerFooter": 120,
+	"events": [
+		"onLoad",
+		"onOutsideCall"
+	],
 	"pageFormat": {
-		"paperName": "US Letter",
-		"paperWidth": "612pt",
-		"paperHeight": "792pt",
-		"scale": 25600
+		"paperName": "A4",
+		"paperWidth": "595pt",
+		"paperHeight": "842pt"
 	},
 	"pages": [
 		{
@@ -23,62 +25,35 @@
 					"top": 0,
 					"left": 0,
 					"width": 400,
-					"height": 68,
+					"height": 120,
 					"sizingX": "grow",
-					"picture": "/RESOURCES/Images/Background_Mac.png"
+					"sizingY": "move",
+					"pictureFormat": "scaled",
+					"picture": "/RESOURCES/Images/Background_Win.png"
 				}
 			}
 		},
 		{
 			"objects": {
-				"Line1": {
-					"type": "line",
-					"top": -10,
-					"left": 365,
-					"height": 139,
-					"visibility": "hidden",
-					"sizingX": "move",
+				"Group Box": {
+					"type": "groupBox",
+					"top": 169,
+					"left": 0,
+					"width": 331,
+					"height": 111,
 					"sizingY": "move",
-					"width": 0,
-					"startPoint": "topLeft"
-				},
-				"Line2": {
-					"type": "line",
-					"top": -10,
-					"left": 385,
-					"height": 139,
-					"visibility": "hidden",
-					"sizingX": "move",
-					"sizingY": "move",
-					"width": 0,
-					"startPoint": "topLeft"
-				},
-				"ThermoProgress": {
-					"type": "progress",
-					"top": 29,
-					"left": 60,
-					"width": 325,
-					"height": 15,
-					"sizingX": "grow",
-					"sizingY": "move",
-					"continuousExecution": false,
-					"min": 0,
-					"max": 100,
-					"graduationStep": 1,
-					"class": "Bouton",
-					"events": [
-						"onClick",
-						"onDataChange"
-					]
+					"class": "Progress_Message",
+					"text": "These variables are \"memory\""
 				},
 				"Message1": {
 					"type": "input",
-					"top": 7,
-					"left": 60,
-					"width": 325,
-					"height": 18,
+					"top": 11,
+					"left": 20,
+					"width": 280,
+					"height": 24,
 					"sizingX": "grow",
 					"sizingY": "move",
+					"stroke": "#FFFFFF",
 					"class": "Progress_Title",
 					"focusable": false,
 					"fill": "transparent",
@@ -93,10 +68,10 @@
 				},
 				"Message2": {
 					"type": "input",
-					"top": 46,
-					"left": 60,
-					"width": 325,
-					"height": 14,
+					"top": 50,
+					"left": 20,
+					"width": 360,
+					"height": 29,
 					"sizingX": "grow",
 					"sizingY": "move",
 					"class": "Progress_Message",
@@ -113,10 +88,11 @@
 				},
 				"Icon": {
 					"type": "input",
-					"top": 10,
-					"left": 10,
-					"width": 40,
+					"top": 0,
+					"left": 310,
+					"width": 80,
 					"height": 40,
+					"sizingX": "move",
 					"sizingY": "move",
 					"dataSourceTypeHint": "picture",
 					"class": "Bouton",
@@ -127,39 +103,69 @@
 					"contextMenu": "none",
 					"pictureFormat": "proportionalCenter",
 					"dragging": "none",
-					"dropping": "none",
+					"dropping": "none"
+				},
+				"StopButton": {
+					"type": "button",
+					"top": 86,
+					"left": 307,
+					"width": 73,
+					"height": 23,
+					"visibility": "hidden",
+					"sizingX": "move",
+					"sizingY": "move",
+					"dataSource": "vStopButton",
+					"text": ":xliff:BtnStop",
+					"class": "Bouton",
+					"focusable": false,
+					"method": "ObjectMethods/StopButton.4dm",
 					"events": [
-						"onDataChange"
+						"onClick"
 					]
 				},
-				"SepLine": {
+				"Line1": {
 					"type": "line",
-					"top": 67,
-					"left": 0,
-					"width": 400,
+					"top": -10,
+					"left": 290,
+					"height": 159,
 					"visibility": "hidden",
+					"sizingX": "move",
+					"sizingY": "move"
+				},
+				"Line2": {
+					"type": "line",
+					"top": -10,
+					"left": 385,
+					"height": 159,
+					"visibility": "hidden",
+					"sizingX": "move",
+					"sizingY": "move"
+				},
+				"ThermoProgress": {
+					"type": "progress",
+					"top": 89,
+					"left": 20,
+					"width": 365,
+					"height": 16,
 					"sizingX": "grow",
 					"sizingY": "move",
-					"stroke": "#555555",
-					"height": 0,
-					"startPoint": "topLeft"
-				},
-				"Group Box": {
-					"type": "groupBox",
-					"top": 169,
-					"left": 0,
-					"width": 331,
-					"height": 111,
-					"sizingY": "move",
-					"class": "Progress_Message",
-					"text": "These variables are \"memory\""
+					"continuousExecution": false,
+					"min": 0,
+					"max": 100,
+					"graduationStep": 10,
+					"step": 10,
+					"class": "Bouton",
+					"events": [
+						"onClick",
+						"onDataChange"
+					]
 				},
 				"ProgressValue": {
 					"type": "input",
 					"top": 192,
 					"left": 17,
-					"width": 181,
-					"height": 18,
+					"width": 111,
+					"height": 11,
 					"sizingY": "move",
 					"dataSourceTypeHint": "number",
 					"stroke": "#EE0000",
@@ -180,8 +186,8 @@
 					"type": "input",
 					"top": 214,
 					"left": 17,
-					"width": 181,
-					"height": 18,
+					"width": 111,
+					"height": 11,
 					"sizingY": "move",
 					"stroke": "#EE0000",
 					"class": "Progress_Message",
@@ -201,8 +207,8 @@
 					"type": "input",
 					"top": 238,
 					"left": 17,
-					"width": 181,
-					"height": 18,
+					"width": 111,
+					"height": 11,
 					"sizingY": "move",
 					"dataSourceTypeHint": "number",
 					"stroke": "#EE0000",
@@ -223,8 +229,8 @@
 					"type": "input",
 					"top": 257,
 					"left": 18,
-					"width": 181,
-					"height": 18,
+					"width": 111,
+					"height": 11,
 					"sizingY": "move",
 					"dataSourceTypeHint": "number",
 					"stroke": "#EE0000",
@@ -241,44 +247,33 @@
 						"onDataChange"
 					]
 				},
-				"StopButton": {
-					"type": "button",
-					"top": 28,
-					"left": 370,
-					"width": 20,
-					"height": 20,
-					"visibility": "hidden",
-					"sizingX": "move",
-					"sizingY": "move",
-					"dataSource": "vStopButton",
-					"class": "Bouton",
-					"focusable": false,
-					"icon": "/RESOURCES/Images/Close.png",
-					"iconFrames": 4,
-					"style": "custom",
-					"method": "ObjectMethods/StopButton.4dm",
-					"events": [
-						"onClick"
-					]
+				"Static Picture1": {
+					"type": "picture",
+					"top": 36,
+					"left": 471,
+					"width": 489,
+					"height": 174,
+					"picture": "Images/Static Picture1.tif"
 				}
 			}
 		}
 	],
 	"editor": {
-		"activeView": "Vue 1",
-		"defaultView": "Vue 1",
+		"activeView": "View 1",
+		"defaultView": "View 1",
 		"views": {
-			"Vue 1": {},
-			"Vue 2": {},
-			"Vue 3": {},
-			"Vue 4": {},
-			"Vue 5": {},
-			"Vue 6": {},
-			"Vue 7": {},
-			"Vue 8": {},
-			"Vue 9": {}
+			"View 1": {},
+			"View 2": {},
+			"View 3": {},
+			"View 4": {},
+			"View 5": {},
+			"View 6": {},
+			"View 7": {},
+			"View 8": {},
+			"View 9": {}
 		}
 	},
+	"geometryStamp": 2,
 	"$4d": {
 		"version": "1",
 		"kind": "form"
