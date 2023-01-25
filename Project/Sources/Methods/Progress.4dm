@@ -15,20 +15,6 @@ Case of
 	: ($signal.description="create")  // Create a new instance
 		
 		// D'abord chercher si il y a un null à récupérer ?
-		//instances.push($progress)
-		//$progress.id:=instances.length  // It's a bad idea
-		
-		//______________________________________________________
-	: ($signal.description="close")
-		
-		//var $instance : cs.progress
-		//$c:=instances.indices("id"; $progress.id)
-		
-		//If ($c.length>0)
-		
-		CALL FORM:C1391($progress.window; Formula:C1597(CANCEL:C270))
-		
-		// End if
 		
 		//______________________________________________________
 	: ($signal.description="show")
@@ -36,39 +22,73 @@ Case of
 		var $bottom; $left; $right; $height; $width; $top : Integer
 		var $name : Text
 		
-		If (Is macOS:C1572)
+		var $show : Boolean
+		
+		If (Not:C34($progress.closed))
 			
-			$name:="MACOS"
-			// FIXME: return 0 & 0
-			//FORM GET PROPERTIES($name; width; height)
-			$width:=400
-			$height:=68
-			$left:=(Screen width:C187/2)-($width/2)
-			$top:=80+Tool bar height:C1016
-			$right:=$left+$width
-			$bottom:=$top+$height
-			$progress.window:=Open window:C153($left; $top; $right; $bottom; -1*Plain fixed size window:K34:6; " ")
+			$progress.timeSpent:=Tickcount:C458-$progress.start
 			
-			VerticalCenter:=$left
+			$show:=$progress.delay=0 || ($progress.timeSpent>$progress.delay)
 			
-		Else 
-			
-			$name:="WINDOWS"
-			// FIXME: return 0 & 0
-			//FORM GET PROPERTIES($name; width; height)
-			$width:=400
-			$height:=120
-			$left:=(Screen width:C187/2)-($width/2)
-			$top:=(Screen height:C188-$height)/2
-			$right:=$left+$width
-			$bottom:=$top+$height
-			$progress.window:=Open window:C153($left; $top; $right; $bottom; Plain fixed size window:K34:6; " ")
-			
-			VerticalCenter:=($top+$bottom)/2
-			
+			If (Not:C34($show))
+				
+				//$delay:=True
+				//CALL WORKER($progress._worker; $progress._progress; $signal; $progress)
+				
+			Else 
+				
+				If (Is macOS:C1572)
+					
+					$name:="MACOS"
+					// FIXME: return 0 & 0
+					//FORM GET PROPERTIES($name; width; height)
+					$width:=400
+					$height:=68
+					$left:=(Screen width:C187/2)-($width/2)
+					$top:=80+Tool bar height:C1016
+					$right:=$left+$width
+					$bottom:=$top+$height
+					$progress.window:=Open window:C153($left; $top; $right; $bottom; -1*Plain fixed size window:K34:6; " ")
+					
+					VerticalCenter:=$left
+					
+				Else 
+					
+					$name:="WINDOWS"
+					// FIXME: return 0 & 0
+					//FORM GET PROPERTIES($name; width; height)
+					$width:=400
+					$height:=120
+					$left:=(Screen width:C187/2)-($width/2)
+					$top:=(Screen height:C188-$height)/2
+					$right:=$left+$width
+					$bottom:=$top+$height
+					$progress.window:=Open window:C153($left; $top; $right; $bottom; Plain fixed size window:K34:6; " ")
+					
+					VerticalCenter:=($top+$bottom)/2
+					
+				End if 
+				
+				DIALOG:C40($name; $progress; *)
+				
+			End if 
 		End if 
 		
-		DIALOG:C40($name; $progress; *)
+		//______________________________________________________
+	: ($progress.window=Null:C1517)
+		
+		
+		
+		//______________________________________________________
+	: ($signal.description="close")
+		
+		CALL FORM:C1391($progress.window; Formula:C1597(CANCEL:C270))
+		
+		//______________________________________________________
+	: ($signal.description="message")
+		
+		BEEP:C151
+		CALL FORM:C1391($progress.window; Formula:C1597(Form:C1466.message:=$progress.message))
 		
 		//______________________________________________________
 	Else 
@@ -78,10 +98,14 @@ Case of
 		//______________________________________________________
 End case 
 
-Use ($signal)
+If ($signal#Null:C1517)
 	
-	$signal.instance:=OB Copy:C1225($progress; ck shared:K85:29)
+	Use ($signal)
+		
+		$signal.instance:=OB Copy:C1225($progress; ck shared:K85:29)
+		
+	End use 
 	
-End use 
-
-$signal.trigger()
+	$signal.trigger()
+	
+End if 

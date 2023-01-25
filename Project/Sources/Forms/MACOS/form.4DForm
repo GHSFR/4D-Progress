@@ -89,7 +89,7 @@
 					"dragging": "none",
 					"dropping": "custom",
 					"events": [],
-					"dataSource": "Form:C1466.title",
+					"dataSource": "Form:C1466._title",
 					"fontTheme": "normal"
 				},
 				"message": {
@@ -107,7 +107,7 @@
 					"dragging": "none",
 					"dropping": "custom",
 					"events": [],
-					"dataSource": "Form:C1466.message",
+					"dataSource": "Form:C1466._message",
 					"fontTheme": "normal"
 				},
 				"Icon": {
@@ -127,7 +127,7 @@
 					"dropping": "none",
 					"events": [],
 					"contextMenu": "none",
-					"dataSource": "Form:C1466.icon"
+					"dataSource": "Form:C1466._icon"
 				},
 				"SepLine": {
 					"type": "line",

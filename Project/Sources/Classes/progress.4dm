@@ -1,12 +1,16 @@
 Class constructor($title)
 	
-	This:C1470.title:=""
-	This:C1470.message:=""
+	This:C1470.ready:=False:C215
+	
+	This:C1470._title:=""
+	This:C1470._message:=""
 	This:C1470.progress:=-1  // Barber
 	This:C1470.cancellable:=False:C215
 	
+	This:C1470.start:=Tickcount:C458
+	This:C1470.delay:=0
 	
-	
+	This:C1470.closed:=False:C215
 	
 	This:C1470.stopTitle:=""
 	This:C1470.isForeground:=True:C214
@@ -14,12 +18,10 @@ Class constructor($title)
 	This:C1470.id:=0
 	This:C1470.stopEnabled:=False:C215
 	This:C1470.stopped:=False:C215
-	This:C1470.delay:=0
-	This:C1470.start:=Tickcount:C458
 	This:C1470.isVisible:=False:C215
 	This:C1470.success:=False:C215
 	
-	This:C1470.worker:="$progress"  // 1
+	This:C1470._worker:="$progress"  // 1
 	
 	If (Value type:C1509($title)=Is object:K8:27)
 		
@@ -31,67 +33,118 @@ Class constructor($title)
 		
 	Else 
 		
-		This:C1470.title:=String:C10($title)
+		This:C1470._title:=String:C10($title)
 		
 	End if 
 	
-	// Unfortunately there is no way to create an invisible progress
-	
-	//This.id:=Progress New
-	//var $id : Integer
-	//$id:=Progress New
-	//This.id:=$id
+	This:C1470._handler:=Formula:C1597(Progress)
 	
 	This:C1470.init()
-	
 	
 	// === === === === === === === === === === === === === === === === === === ===
 Function init()
 	
 	var $signal : 4D:C1709.Signal
-	$signal:=New signal:C1641
+	$signal:=This:C1470._signal("create")
 	
-	Use ($signal)
-		
-		$signal.description:="create"
-		
-	End use 
-	
-	CALL WORKER:C1389(This:C1470.worker; Formula:C1597(Progress); $signal; This:C1470)
+	CALL WORKER:C1389(This:C1470._worker; This:C1470._handler; $signal; This:C1470)
 	$signal.wait()
 	This:C1470.success:=$signal.signaled
 	
 	If (This:C1470.success)
 		
 		This:C1470.id:=$signal.instance.id
+		This:C1470.ready:=True:C214
 		
-		If (This:C1470.delay=0)
+	End if 
+	
+	// <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==>
+Function set message($message : Text)
+	
+	This:C1470._message:=$message
+	
+	If (This:C1470.ready)
+		
+		var $signal : 4D:C1709.Signal
+		$signal:=This:C1470._signal("message")
+		
+		If (False:C215)
+			
+			This:C1470._callWorker($signal; False:C215)
+			
+		Else 
+			
+			CALL WORKER:C1389(This:C1470._worker; This:C1470._handler; $signal; This:C1470)
+			
+		End if 
+	End if 
+	
+	// <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==>
+Function get message() : Text
+	
+	return This:C1470._message
+	
+	// === === === === === === === === === === === === === === === === === === ===
+Function display()
+	
+	var $signal : 4D:C1709.Signal
+	$signal:=This:C1470._signal("show")
+	
+	CALL WORKER:C1389(This:C1470._worker; This:C1470._handler; $signal; This:C1470)
+	$signal.wait()
+	This:C1470.success:=$signal.signaled
+	
+	If (This:C1470.success)
+		
+		If ($signal.instance.timeSpent>=This:C1470.delay)
+			
+			This:C1470.window:=$signal.instance.window
+			
+		Else 
+			
+			$start:=Tickcount:C458
+			
+			While ((Tickcount:C458-$start)<60)
+				
+				IDLE:C311
+				DELAY PROCESS:C323(Current process:C322; 1)
+				IDLE:C311
+				
+			End while 
 			
 			This:C1470.display()
 			
 		End if 
 	End if 
 	
-	// === === === === === === === === === === === === === === === === === === ===
-Function display()
+	//*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+Function _signal($description : Text) : 4D:C1709.Signal
 	
 	var $signal : 4D:C1709.Signal
 	$signal:=New signal:C1641
 	
 	Use ($signal)
 		
-		$signal.description:="show"
+		$signal.description:=$description
 		
 	End use 
 	
-	CALL WORKER:C1389(This:C1470.worker; Formula:C1597(Progress); $signal; This:C1470)
-	$signal.wait()
-	This:C1470.success:=$signal.signaled
+	return $signal
 	
-	If (This:C1470.success)
+	//*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+Function _callWorker($ignal : 4D:C1709.Signal; $wait : Boolean) : 4D:C1709.Signal
+	
+	If (This:C1470.ready)
 		
-		This:C1470.window:=$signal.instance.window
-		
+		$wait:=Count parameters:C259>=2 ? $wait : True:C214
+		CALL WORKER:C1389(This:C1470._worker; This:C1470._handler; $signal; This:C1470)
+		If ($wait)
+			
+			$signal.wait()
+			This:C1470.success:=$signal.signaled
+			return $signal
+			
+		End if 
 	End if 
 	
 	// === === === === === === === === === === === === === === === === === === ===
@@ -164,15 +217,11 @@ Function hide()->$this : cs:C1710.progress
 Function close()
 	
 	var $signal : 4D:C1709.Signal
-	$signal:=New signal:C1641
+	$signal:=This:C1470._signal("close")
 	
-	Use ($signal)
-		
-		$signal.description:="close"
-		
-	End use 
+	This:C1470.closed:=True:C214
 	
-	CALL WORKER:C1389(This:C1470.worker; Formula:C1597(Progress); $signal; This:C1470)
+	CALL WORKER:C1389(This:C1470._worker; This:C1470._handler; $signal; This:C1470)
 	$signal.wait()
 	This:C1470.success:=$signal.signaled
 	
@@ -201,8 +250,8 @@ Function setTitle($title : Text)->$this : cs:C1710.progress
 		
 	End if 
 	
-	This:C1470.title:=$t
-	Progress SET TITLE(This:C1470.id; This:C1470.title)
+	This:C1470._title:=$t
+	Progress SET TITLE(This:C1470.id; This:C1470._title)
 	
 	This:C1470.isStopped()
 	
@@ -211,39 +260,50 @@ Function setTitle($title : Text)->$this : cs:C1710.progress
 	// === === === === === === === === === === === === === === === === === === ===
 Function setMessage($message : Text; $foreground : Boolean)->$this : cs:C1710.progress
 	
-	var $t : Text
+	//var $t : Text
 	
-	If (Count parameters:C259>=1)
-		
-		$t:=$message
-		
-		If (Length:C16($message)>0)\
-			 & (Length:C16($message)<=255)
-			
-			//%W-533.1
-			If ($message[[1]]#Char:C90(1))
-				
-				$t:=Get localized string:C991($message)
-				$t:=Choose:C955(Length:C16($t)>0; $t; $message)  // Revert if no localization
-				
-			End if 
-			//%W+533.1
-			
-		End if 
-		
-		If (Count parameters:C259>=2)
-			
-			This:C1470.isForeground:=$foreground
-			
-		End if 
-	End if 
+	//If (Count parameters>=1)
 	
-	This:C1470.message:=$t
-	Progress SET MESSAGE(This:C1470.id; This:C1470.message; This:C1470.isForeground)
+	//$t:=$message
 	
-	This:C1470.isStopped()
+	//If (Length($message)>0)\
+								 & (Length($message)<=255)
 	
-	$this:=This:C1470
+	////%W-533.1
+	//If ($message[[1]]#Char(1))
+	
+	//$t:=Get localized string($message)
+	//$t:=Choose(Length($t)>0; $t; $message)  // Revert if no localization
+	
+	//End if 
+	////%W+533.1
+	
+	//End if 
+	
+	//If (Count parameters>=2)
+	
+	//This.isForeground:=$foreground
+	
+	//End if 
+	//End if 
+	
+	//This._message:=$t
+	//Progress SET MESSAGE(This.id; This._message; This.isForeground)
+	
+	//This.isStopped()
+	
+	//$this:=This
+	
+	This:C1470._message:=$message
+	
+	var $signal : 4D:C1709.Signal
+	$signal:=This:C1470._signal("message")
+	
+	CALL WORKER:C1389(This:C1470._worker; This:C1470._handler; $signal; This:C1470)
+	
+	$signal.wait()
+	This:C1470.success:=$signal.signaled
+	
 	
 	// === === === === === === === === === === === === === === === === === === ===
 Function setProgress($progress; $foreground : Boolean)->$this : cs:C1710.progress
@@ -278,7 +338,7 @@ Function setProgress($progress; $foreground : Boolean)->$this : cs:C1710.progres
 		
 	End if 
 	
-	Progress SET PROGRESS(This:C1470.id; This:C1470.progress; This:C1470.message; This:C1470.isForeground)
+	Progress SET PROGRESS(This:C1470.id; This:C1470.progress; This:C1470._message; This:C1470.isForeground)
 	
 	This:C1470.isStopped()
 	
