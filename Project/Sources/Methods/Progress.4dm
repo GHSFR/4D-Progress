@@ -85,9 +85,9 @@ Case of
 		CALL FORM:C1391($progress.window; Formula:C1597(CANCEL:C270))
 		
 		//______________________________________________________
-	: ($signal.description="message")
+	: ($signal.description="update")
 		
-		BEEP:C151
+		CALL FORM:C1391($progress.window; Formula:C1597(Form:C1466.title:=$progress.title))
 		CALL FORM:C1391($progress.window; Formula:C1597(Form:C1466.message:=$progress.message))
 		
 		//______________________________________________________

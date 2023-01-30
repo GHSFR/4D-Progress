@@ -42,6 +42,110 @@ Class constructor($title)
 	This:C1470.init()
 	
 	// === === === === === === === === === === === === === === === === === === ===
+Function _callBack($signal : 4D:C1709.Signal; $progress : cs:C1710.progress)
+	
+	
+	Case of 
+			
+			//______________________________________________________
+		: ($signal.description="create")  // Create a new instance
+			
+			// D'abord chercher si il y a un null à récupérer ?
+			
+			//______________________________________________________
+		: ($signal.description="show")
+			
+			var $bottom; $left; $right; $height; $width; $top : Integer
+			var $name : Text
+			
+			var $show : Boolean
+			
+			If (Not:C34($progress.closed))
+				
+				$progress.timeSpent:=Tickcount:C458-$progress.start
+				
+				$show:=$progress.delay=0 || ($progress.timeSpent>$progress.delay)
+				
+				If (Not:C34($show))
+					
+					//$delay:=True
+					//CALL WORKER($progress._worker; $progress._progress; $signal; $progress)
+					
+				Else 
+					
+					If (Is macOS:C1572)
+						
+						$name:="MACOS"
+						// FIXME: return 0 & 0
+						//FORM GET PROPERTIES($name; width; height)
+						$width:=400
+						$height:=68
+						$left:=(Screen width:C187/2)-($width/2)
+						$top:=80+Tool bar height:C1016
+						$right:=$left+$width
+						$bottom:=$top+$height
+						$progress.window:=Open window:C153($left; $top; $right; $bottom; -1*Plain fixed size window:K34:6; " ")
+						
+						VerticalCenter:=$left
+						
+					Else 
+						
+						$name:="WINDOWS"
+						// FIXME: return 0 & 0
+						//FORM GET PROPERTIES($name; width; height)
+						$width:=400
+						$height:=120
+						$left:=(Screen width:C187/2)-($width/2)
+						$top:=(Screen height:C188-$height)/2
+						$right:=$left+$width
+						$bottom:=$top+$height
+						$progress.window:=Open window:C153($left; $top; $right; $bottom; Plain fixed size window:K34:6; " ")
+						
+						VerticalCenter:=($top+$bottom)/2
+						
+					End if 
+					
+					DIALOG:C40($name; $progress; *)
+					
+				End if 
+			End if 
+			
+			//______________________________________________________
+		: ($progress.window=Null:C1517)
+			
+			
+			
+			//______________________________________________________
+		: ($signal.description="close")
+			
+			CALL FORM:C1391($progress.window; Formula:C1597(CANCEL:C270))
+			
+			//______________________________________________________
+		: ($signal.description="update")
+			
+			CALL FORM:C1391($progress.window; Formula:C1597(Form:C1466.message:=$progress.message))
+			
+			//______________________________________________________
+		Else 
+			
+			// A "Case of" statement should never omit "Else"
+			
+			//______________________________________________________
+	End case 
+	
+	If ($signal#Null:C1517)
+		
+		Use ($signal)
+			
+			$signal.instance:=OB Copy:C1225($progress; ck shared:K85:29)
+			
+		End use 
+		
+		$signal.trigger()
+		
+	End if 
+	
+	// === === === === === === === === === === === === === === === === === === ===
 Function init()
 	
 	var $signal : 4D:C1709.Signal
@@ -66,7 +170,7 @@ Function set message($message : Text)
 	If (This:C1470.ready)
 		
 		var $signal : 4D:C1709.Signal
-		$signal:=This:C1470._signal("message")
+		$signal:=This:C1470._signal("update")
 		
 		If (False:C215)
 			
@@ -83,6 +187,32 @@ Function set message($message : Text)
 Function get message() : Text
 	
 	return This:C1470._message
+	
+	// <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==>
+Function set title($title : Text)
+	
+	This:C1470._title:=$title
+	
+	If (This:C1470.ready)
+		
+		var $signal : 4D:C1709.Signal
+		$signal:=This:C1470._signal("update")
+		
+		If (False:C215)
+			
+			This:C1470._callWorker($signal; False:C215)
+			
+		Else 
+			
+			CALL WORKER:C1389(This:C1470._worker; This:C1470._handler; $signal; This:C1470)
+			
+		End if 
+	End if 
+	
+	// <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==> <==>
+Function get title() : Text
+	
+	return This:C1470._title
 	
 	// === === === === === === === === === === === === === === === === === === ===
 Function display()
@@ -267,7 +397,7 @@ Function setMessage($message : Text; $foreground : Boolean)->$this : cs:C1710.pr
 	//$t:=$message
 	
 	//If (Length($message)>0)\
-								 & (Length($message)<=255)
+										 & (Length($message)<=255)
 	
 	////%W-533.1
 	//If ($message[[1]]#Char(1))
