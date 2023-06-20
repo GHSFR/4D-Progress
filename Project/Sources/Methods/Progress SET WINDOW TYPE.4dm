@@ -1,4 +1,4 @@
-//%attributes = {}
+//%attributes = {"shared":true}
 #DECLARE($type : Integer)
 
 Use (Storage:C1525)
