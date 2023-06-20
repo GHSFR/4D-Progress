@@ -25,10 +25,10 @@ If (Count parameters:C259=0)
 	
 Else 
 	
-	If (Storage:C1525.windowType=Null:C1517)
+	If (Storage:C1525.options.windowType=Null:C1517)
 		$windowType:=Plain fixed size window:K34:6
 	Else 
-		$windowType:=Storage:C1525.windowType
+		$windowType:=Storage:C1525.options.windowType
 	End if 
 	
 	//ACI0098693
