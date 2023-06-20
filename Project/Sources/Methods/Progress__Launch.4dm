@@ -9,7 +9,7 @@ C_LONGINT:C283($1)  //recursive indicator
 C_PICTURE:C286($Image)
 C_LONGINT:C283($PS_Progress; $ProgressWindow)
 
-C_LONGINT:C283($SubformWidth; $SubformHeight)
+C_LONGINT:C283($SubformWidth; $SubformHeight; $windowType)
 C_LONGINT:C283($x1; $y1; $x2; $y2)
 C_LONGINT:C283($Width; $Height; $WinPosX; $WinPosY)
 
@@ -25,6 +25,12 @@ If (Count parameters:C259=0)
 	
 Else 
 	
+	If (Storage:C1525.windowType=Null:C1517)
+		$windowType:=Plain fixed size window:K34:6
+	Else 
+		$windowType:=Storage:C1525.windowType
+	End if 
+	
 	//ACI0098693
 	If (Is Windows:C1573)
 		
@@ -36,7 +42,7 @@ Else
 		$x2:=$x1+$SubformWidth
 		$y2:=$y1+$SubformHeight
 		
-		<>ProgressWindow:=Open window:C153($x1; $y1; $x2; $y2; Plain fixed size window:K34:6)
+		<>ProgressWindow:=Open window:C153($x1; $y1; $x2; $y2; $windowType)
 		<>VerticalCenter:=($y1+$y2)/2
 		
 		DIALOG:C40("D_Multiprogress_Win")
@@ -56,7 +62,7 @@ Else
 		//<>ProgressWindow:=Open window($x1;$y1;$x2;$y2;Plain fixed size window)  //   ACI0098693 +_ o _ Compositing mode)
 		
 		//<>ProgressWindow:=Open window($x1;$y1;$x2;$y2;Palette window*(-1))
-		<>ProgressWindow:=Open window:C153($x1; $y1; $x2; $y2; Plain fixed size window:K34:6*(-1))
+		<>ProgressWindow:=Open window:C153($x1; $y1; $x2; $y2; $windowType*(-1))
 		<>VerticalCenter:=$x1
 		
 		DIALOG:C40("D_Multiprogress_Mac")
