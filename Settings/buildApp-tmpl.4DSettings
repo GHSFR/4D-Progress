@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<Preferences4D>
+
+  <BuildApp>
+    <BuildCompiled>False</BuildCompiled>
+    <IncludeAssociatedFolders>True</IncludeAssociatedFolders>
+    <BuildComponent>True</BuildComponent>
+    <BuildApplicationSerialized>False</BuildApplicationSerialized>
+    <RuntimeVL>
+      <LastDataPathLookup>ByAppName</LastDataPathLookup>
+    </RuntimeVL>
+    <SourcesFiles>
+      <RuntimeVL>
+        <RuntimeVLIncludeIt>True</RuntimeVLIncludeIt>
+      </RuntimeVL>
+      <CS>
+        <ServerIncludeIt>False</ServerIncludeIt>
+        <ClientMacIncludeIt>False</ClientMacIncludeIt>
+        <ClientWinIncludeIt>False</ClientWinIncludeIt>
+      </CS>
+    </SourcesFiles>
+    <CS>
+      <BuildServerApplication>False</BuildServerApplication>
+      <LastDataPathLookup>ByAppName</LastDataPathLookup>
+      <MacCompiledDatabaseToWinIncludeIt>False</MacCompiledDatabaseToWinIncludeIt>
+      <MacCompiledDatabaseToWin></MacCompiledDatabaseToWin>
+      <ServerEmbedsProjectDirectoryFile>False</ServerEmbedsProjectDirectoryFile>
+      <BuildCSUpgradeable>False</BuildCSUpgradeable>
+      <CurrentVers>1</CurrentVers>
+      <HardLink></HardLink>
+    </CS>
+    <BuildApplicationName><!--#4DEVAL $1.name--></BuildApplicationName>
+    <BuildMacDestFolder>::<!--#4DEVAL $1.name-->_Build:</BuildMacDestFolder>
+    <ArrayExcludedPluginName>
+      <ItemsCount>0</ItemsCount>
+    </ArrayExcludedPluginName>
+    <ArrayExcludedPluginID>
+      <ItemsCount>0</ItemsCount>
+    </ArrayExcludedPluginID>
+    <ArrayExcludedComponentName>
+      <ItemsCount>0</ItemsCount>
+    </ArrayExcludedComponentName>
+    <ArrayExcludedModuleName>
+      <ItemsCount>0</ItemsCount>
+    </ArrayExcludedModuleName>
+		<Versioning>
+			<Common>
+				<CommonCopyright>©GHS <!--#4DEVAL String:C10(Year of:C25(Current date:C33))--></CommonCopyright>
+				<CommonVersion>build <!--#4DEVAL String:C10($1.numBuild)--> (4D <!--#4DEVAL $2-->)</CommonVersion>
+				<CommonCompanyName>GHS</CommonCompanyName>
+				<CommonInternalName><!--#4DEVAL $1.name--></CommonInternalName>
+				<CommonPrivateBuild><!--#4DEVAL String:C10($1.numBuild)--></CommonPrivateBuild>
+				<CommonSpecialBuild><!--#4DEVAL String:C10($1.numBuild)--></CommonSpecialBuild>
+			</Common>
+		</Versioning>
+    <Licenses>
+      <ArrayLicenseMac>
+        <ItemsCount>0</ItemsCount>
+      </ArrayLicenseMac>
+    </Licenses>
+    <SignApplication>
+      <MacSignature>True</MacSignature>
+      <MacCertificate>Developer ID Application: GHS (FR) (74M25885A6)</MacCertificate>
+      <AdHocSign>False</AdHocSign>
+    </SignApplication>
+  </BuildApp>
+
+</Preferences4D>

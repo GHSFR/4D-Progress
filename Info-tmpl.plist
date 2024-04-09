@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+
+  <dict>
+    <key>NSHumanReadableCopyright</key>
+    <string>©GHS <!--#4DEVAL String:C10(Year of:C25(Current date:C33))--></string>
+    <key>CFBundleVersion</key>
+    <string><!--#4DEVAL String:C10($1.numBuild)--></string>
+    <key>CFBundleDisplayName</key>
+    <string><!--#4DEVAL $1.name--></string>
+    <key>CFBundleShortVersionString</key>
+    <string><!--#4DEVAL $2--></string>
+    <key>CFBundleGetInfoString</key>
+    <string><!--#4DEVAL $2--></string>
+    <key>CFBundleLongVersionString</key>
+    <string>build <!--#4DEVAL String:C10($1.numBuild)--> (4D <!--#4DEVAL $2-->)</string>
+    <key>CFBundleName</key>
+    <string><!--#4DEVAL $1.name--></string>
+  </dict>
+
+</plist>
