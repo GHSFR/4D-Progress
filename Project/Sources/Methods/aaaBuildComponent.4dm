@@ -66,7 +66,7 @@ If (OK=1)
 		$settings.compilerOptions:=$form.compiled ? New object:C1471("targets"; $targets) : Null:C1517
 		$settings.packedProject:=$form.compiled
 		$settings.obfuscated:=$form.compiled
-		$settings.destinationFolder:=$dbFolder.parent.folder($dbFolder.name+"_Build")
+		$settings.destinationFolder:=$dbFolder.parent.folder($dbFolder.name+"_Build/Components")
 		
 		$settings.includePaths:=New collection:C1472()
 		$settings.includePaths.push(New object:C1471("source"; $infoFile))
